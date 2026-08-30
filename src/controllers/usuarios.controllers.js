@@ -28,7 +28,7 @@ export const getUser = async (req, res) => {
 }
 
 export const createUsers = async (req, res) => {
-    const {name, note} = req.body
+    const {nombre, apellido, email, fecha_nac, pais} = req.body
     try{
         const [rows] = await pool.query(
             'INSERT INTO usuarios (nombre, apellido, email, fecha_nac, pais) VALUES (?, ?, ?, ?, ?)',
@@ -66,7 +66,7 @@ export const deleteUsers = async (req, res) => {
 
 export const updateUsers = async (req, res) => {
     const {id} = req.params
-    const {name, note} = req.body
+    const {nombre, apellido, email, fecha_nac, pais} = req.body
      try{
         const [result] = await pool.query(
             `UPDATE usuarios SET nombre = IFNULL(?, nombre), apellido = IFNULL(?, apellido), 
