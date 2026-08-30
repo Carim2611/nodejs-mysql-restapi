@@ -53,7 +53,7 @@ export const deleteViajes = async (req, res) => {
         const [result] = await pool.query('DELETE FROM viajes WHERE id = ?', [req.params.id])
 
         if (result.affectedRows === 0) return res.status(404).json({
-            message: 'User not found'
+            message: 'Viaje not found'
         })
 
         res.sendStatus(204)

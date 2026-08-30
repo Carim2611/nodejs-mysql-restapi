@@ -13,7 +13,16 @@ export const getReservas = async (req, res) => {
 
 export const getReserva = async (req, res) => {
     try{
-        const [rows] = await pool.query('SELECT * FROM reservas WHERE id = ?', [req.params.id])
+        const [rows] = await pool.query(`SELECT 
+            reservas.id, CONCAT(usuarios.nombre, ' ', usuarios.apellido) AS usuario,
+            viajes.origen, viajes.destino, viajes.fecha, viajes.precio,
+            reservas.fecha_reserva, reservas.estado
+            FROM reservas 
+            INNER JOIN usuarios
+                ON reservas.usuario_id = usuarios.id
+            INNER JOIN viajes
+                ON reservas.viaje_id = viajes.id
+            WHERE reservas.id = ?`, [req.params.id])
 
         if (rows.length <= 0) return res.status(404).json({
             message: 'Reserva not found'
@@ -52,7 +61,7 @@ export const deleteReservas = async (req, res) => {
         const [result] = await pool.query('DELETE FROM reservas WHERE id = ?', [req.params.id])
 
         if (result.affectedRows === 0) return res.status(404).json({
-            message: 'User not found'
+            message: 'Reserva not found'
         })
 
         res.sendStatus(204)
@@ -68,7 +77,7 @@ export const updateReservas = async (req, res) => {
     const {estado} = req.body
      try{
         const [result] = await pool.query(
-            `UPDATE reservas estado = IFNULL(?, estado) WHERE id = ?`, 
+            `UPDATE reservas SET estado = IFNULL(?, estado) WHERE id = ?`, 
             [estado, id])
 
         if (result.affectedRows <= 0) return res.status(404).json({

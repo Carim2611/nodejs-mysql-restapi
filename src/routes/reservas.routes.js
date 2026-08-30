@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {getReservas, getReserva, createReservas, deleteReservas, updateReservas} from '../controllers/reservas.controllers.js'
+import {getReservas, getReserva, createReservas, updateReservas, deleteReservas} from '../controllers/reservas.controllers.js'
 
 const router = Router()
 
@@ -9,8 +9,8 @@ router.get('/reservas/:id', getReserva)
 
 router.post('/reservas', createReservas)
 
-router.patch('/reservas/:id', deleteReservas)
+router.patch('/reservas/:id', updateReservas)
 
-router.delete('/reservas/:id', updateReservas)
+router.delete('/reservas/:id', deleteReservas)
 
 export default router
