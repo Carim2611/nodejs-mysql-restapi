@@ -1,5 +1,5 @@
 import express from 'express'
-import studentsRoutes from './routes/students.routes.js'
+import usersRoutes from './routes/usuarios.routes.js'
 import indexRoutes from './routes/index.routes.js'
 
 const app = express()
@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 
 app.use(indexRoutes)
-app.use('/api', studentsRoutes)
+app.use('/api', usersRoutes)
 
 app.use((req, res, next) => {
     res.status(404).json({
